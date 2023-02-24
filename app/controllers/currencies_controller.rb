@@ -30,5 +30,23 @@ def second_currency
 end
 
 
+def conversion
+
+  @first = params.fetch("first_currency")
+  @second = params.fetch("second_currency")
+
+  @currency_raw = open("https://api.exchangerate.host/convert?from=#{@first}&to=#{@second}").read
+  @parsed_currency_data = JSON.parse(@currency_raw)
+
+  @exchange_rate = @parsed_currency_data.fetch("info").fetch("rate")
+
+
+
+
+
+  render({ :template => "currency_templates/results.html.erb" })
+end
+
+
 
 end
